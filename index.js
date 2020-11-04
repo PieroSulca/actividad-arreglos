@@ -8,7 +8,9 @@ const {feed} = require('./source');
 Input: feed -> [{propiedades...}, {propiedades...}]
 Output: 2
 */
-const countTweets = (feed) => {};
+const countTweets = (feed) => {
+        console.log(feed.length)
+};
 
 /*
 2. Obtener un arreglo con todos los perfiles de usuarios que están en el arreglo de tweets
@@ -16,7 +18,12 @@ Input: feed -> [{profile: "AJ + Español"},{ profile: "Elon Musk" }]
 Output: ["AJ + Español", "Elon Musk"]
 */
 
-const getProfiles = (feed) => {}
+const getProfiles = (feed) => {
+        let arrProfile = []
+        feed.map(tweet => {
+                arrProfile.push(tweet.profile)
+        })
+}
 
 /*
 3. Crear una función para obtener el arreglo de tweets con todas sus propiedades pero se tendrá que agregar un '@' al inicio del valor para la propiedad username
@@ -24,7 +31,13 @@ Input:  feed -> [{username: "ajplusespanol", ...},{ username: "elonmusk", ... }]
 Output: [{username: "@ajplusespanol"}, {username: "@elonmusk"}]
 */
 
-const updateUsername = (feed) => {}
+const updateUsername = (feed) => {
+        let arrUsername = []
+        feed.map(tweet => {
+                const username = '@' + tweet.username
+                arrUsername.push(username)
+        })
+}
 
 /*
 4. Crear una función para actualizar el no de interacciones de cada tweet 
@@ -63,7 +76,25 @@ Output: arregloTweets -> [
 */
 
 const updateInteraction = (feed) => {
-
+        let arrTweets = []
+        feed.map(tweet => {
+                tweet.interactions.map(i => {
+                        const {comments, rts, likes} = i
+                        if (comments >= 1000) {
+                                comments /= 1000
+                                comments = comments + 'mil'
+                        }
+                        if (rts >= 1000) {
+                                rts /= 1000
+                                rts = rts + 'mil'
+                        }
+                        if (likes >= 1000) {
+                                likes /= 1000
+                                likes = likes + 'mil'
+                        }
+                        arrTweets.push({comments: comments, retweets: rts, likes: likes})
+                })
+        })
 }
 
 /*
@@ -114,9 +145,12 @@ Output: feed -> [
     }]
 */
 const getTweetsGreaterThan = (feed, noComments) => {
-
+        let tweetsMoreThanThousand = []
+        feed.map(tweets => {
+                if (tweets.interaction.noComments >= noComments)
+                        tweetsMoreThanThousand.push(tweets)
+        })
 }
-
 /*
 6. Función para obtener todos los tweets que tengan un numero menor o igual de "n" comentarios y mostrarlos de la misma forma que el punto no 4
 Input: 
@@ -165,7 +199,11 @@ Output: arregloTweets -> [
     }]
 */
 const getTweetsLessOrEqualsThan = (feed, noComments) => {
-
+        let tweetsMoreThanThousand = []
+        feed.map(tweets => {
+                if (tweets.interaction.noComments <= noComments)
+                        tweetsMoreThanThousand.push(tweets)
+        })
 }
 
 /*
@@ -211,6 +249,10 @@ const getTweetsLessOrEqualsThan = (feed, noComments) => {
     ]
 
 */
-const getTweetsGreaterThanInteraction = (feed, interaction, quantity) => {
-
+const getTweetsGreaterThanInteraction = (feed, interactionChoised, quantity) => {
+        let arrFeed = []
+        feed.feed.map(tweet => {
+                if (tweet.interaction.interactionChoised > quantity)
+                        arrFeed.push(tweets)
+        })
 }
